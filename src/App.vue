@@ -16,3 +16,16 @@ export default {
   }),
 };
 </script>
+
+<style>
+@font-face {
+  font-family: "Open Sans Condensed Regular";
+  src: local("Open Sans Condensed Regular"),
+   url('assets/fonts/open-sans-condensed-regular.woff') format("woff");
+}
+@font-face {
+  font-family: "Open Sans Condensed Semibold";
+  src: local("Open Sans Condensed Semibold"),
+   url('assets/fonts/open-sans-condensed-semibold.woff') format("woff");
+}
+</style>
