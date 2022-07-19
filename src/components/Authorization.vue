@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="500" >
+    <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           class="text-uppercase btn mt-0"
@@ -60,7 +60,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 * {
   text-transform: uppercase;
   font-family: "Open Sans Condensed Semibold", sans-serif;
@@ -81,8 +81,7 @@ export default {
   font-size: 18px;
 }
 .v-dialog:not(.v-dialog--fullscreen) {
-    overflow-y: hidden;
-    max-height: 90%;
+    /* overflow-y: hidden; */
+    max-height: 100% !important;
 }
-
 </style>

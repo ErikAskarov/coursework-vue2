@@ -10,10 +10,29 @@
 
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
+  
+  computed: {
+    isUserAuthenticated(){
+      return this.$store.getters['user/isUserAuthenticated']
+    },
+   /*  token() {
+      if (localStorage.getItem("token"))
+        return true;
+      else return false;
+    } */
+  },
+  watch: {
+    isUserAuthenticated(val){
+      if(val == false) this.$router.push('/')
+      
+    },
+    /* token(value) {
+      if (value)
+        this.$router.push('/calendar');
+      else
+        this.$$router.push('/')
+    } */
+  }
 };
 </script>
 
@@ -27,5 +46,8 @@ export default {
   font-family: "Open Sans Condensed Semibold";
   src: local("Open Sans Condensed Semibold"),
    url('assets/fonts/open-sans-condensed-semibold.woff') format("woff");
+}
+::-webkit-scrollbar {
+  width: 0;
 }
 </style>

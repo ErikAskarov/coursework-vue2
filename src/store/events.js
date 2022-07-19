@@ -1,46 +1,47 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { db } from '../main'
+import { create, getAll, getOne } from '../http/eventsAPI'
 
 Vue.use(Vuex)
 
 export default {
+  namespaced: true,
   state: {
     events: [],
   },
   mutations: {
-    GET_EVENTS(state, payload) {
+    SET_EVENT(state, payload) {
+      state.events.push(payload)
+    },
+    SET_EVENTS(state, payload) {
       Vue.set(state, 'events', payload)
     }
   },
   actions: {
-     async getEvents({ commit }) {
-      let events = []
-      const docRef = await collection(db, 'events')
-      getDocs(docRef).then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          let appData = doc.data();
-          appData.id = doc.id;
-          events.push(appData)
-        })
-      }).then(() => {
-        commit('GET_EVENTS', events)
+    GET_EVENT(payload) {
+      getOne(payload).then((payload) => {
+        console.log('Event:', payload)
+      }).catch((error) => {
+        console.log(error.message)
       })
-
-      this.events = events;
     },
-    async setEvents({ dispatch }, payload) {
-      const docRef = await doc(db, 'events', payload.start)
-      await setDoc(docRef, {
-        name: payload.name,
-        details: payload.details,
-        start: payload.start,
-        end: payload.end,
-      }).then(() => {
-          dispatch('getEvents')
-      }) 
-    }
+    GET_EVENTS({ commit }) {
+      getAll().then((payload) => {
+        console.log('Events:', payload)
+        commit('SET_EVENTS', payload)
+      }).catch((error) => {
+        console.log(error.message)
+      })
+    },
+    SET_EVENT({ commit }, payload) {
+      create(payload).then((data) => {
+        console.log('успех', data)
+        commit('SET_EVENT', payload)
+      }).catch((error) => {
+        console.log('неудача', error.message)
+      })
+    },
+
   },
   getters: {
     getEvents: (state) => state.events
